@@ -9,6 +9,7 @@ Le Module consent-form permet d'intégrer des fiches de consentement simples et 
 ![Capture d'écran 2024-11-27 111258](https://github.com/user-attachments/assets/5ccda1a4-ba3f-45a1-a730-1d805c20b327)
 ![Capture d'écran 2024-11-27 111622](https://github.com/user-attachments/assets/129b9d81-c726-4fc4-8cde-a8734fb95643)
 ![Capture d'écran 2024-11-27 112115](https://github.com/user-attachments/assets/a7d440c1-5089-4dc4-ae18-bbb78bd46f7c)
+![Capture d'écran 2024-11-27 135218](https://github.com/user-attachments/assets/dad518bc-c3f5-4a05-8ba3-94389eec5219)
 
 Si vous appréciez le module et que vous avez les moyens de le faire, vous pouvez me soutenir en m'offrant un café sur Buy Me a Coffee (https://www.buymeacoffee.com/yank). Votre geste serait grandement apprécié et contribuerait à soutenir le développement continu. Quoi qu'il en soit, je vous souhaite une expérience enrichissante et divertissante. N'hésitez pas à me contacter pour partager vos commentaires ou signaler tout problème éventuel.
 
@@ -30,9 +31,9 @@ Une fiche de consentement est un outil utilisé pour assurer une expérience de 
 - *Thèmes sensibles ou tabous* : Par exemple, la violence, les abus, la discrimination, la santé mentale, la sexualité.
 
 - **Niveaux de tolérance** : Chaque thème peut être classé selon un système à trois niveaux :
-    🟢 **Narration libre** : Le thème peut être abordé sans restriction.
-    🟡 **Sous réserve de discussion** : Le thème peut être abordé, mais seulement après une discussion pour clarifier les limites.
-    🔴 **Thème interdit** : Le thème est totalement exclu du jeu.
+    - 🟢 **Narration libre** : Le thème peut être abordé sans restriction.
+    - 🟡 **Sous réserve de discussion** : Le thème peut être abordé, mais seulement après une discussion pour clarifier les limites.
+    - 🔴 **Thème interdit** : Le thème est totalement exclu du jeu.
 
 ### Exemples de thèmes courants
 
