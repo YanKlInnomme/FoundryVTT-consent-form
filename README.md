@@ -6,4 +6,7 @@
 
 Le Module consent-form permet d'intégrer des fiches de consentement simples et intuitives pour chaque joueur dans n'importe quel système Foundry VTT. Cette solution pratique aide à créer un environnement de jeu respectueux et sécurisé pour tous les participants.
 
+![Capture d'écran 2024-11-27 111258](https://github.com/user-attachments/assets/5ccda1a4-ba3f-45a1-a730-1d805c20b327)
+![Capture d'écran 2024-11-27 111622](https://github.com/user-attachments/assets/129b9d81-c726-4fc4-8cde-a8734fb95643)
+
 ...
