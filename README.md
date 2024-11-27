@@ -8,5 +8,6 @@ Le Module consent-form permet d'intégrer des fiches de consentement simples et 
 
 ![Capture d'écran 2024-11-27 111258](https://github.com/user-attachments/assets/5ccda1a4-ba3f-45a1-a730-1d805c20b327)
 ![Capture d'écran 2024-11-27 111622](https://github.com/user-attachments/assets/129b9d81-c726-4fc4-8cde-a8734fb95643)
+![Capture d'écran 2024-11-27 112115](https://github.com/user-attachments/assets/a7d440c1-5089-4dc4-ae18-bbb78bd46f7c)
 
 ...
