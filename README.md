@@ -73,12 +73,12 @@ Une fiche de consentement est un outil utilisé pour assurer une expérience de 
 
 ### Utilisation
 
-1. Une fois le module activé, allez dans l'onglet Acteurs de votre monde.
+1. Une fois le module activé, allez dans l'onglet "Acteurs" de votre monde.
 2. Créez un nouvel acteur ou dupliquez un acteur existant.
-3. Ouvrez sa fiche, puis cliquez sur ⚙️ Sheet en haut à droite.
-4. La configuration de la feuille s'affiche. Dans la liste déroulante "This Sheet", choisissez Consent Form.
+3. Ouvrez sa fiche, puis cliquez sur ⚙️ Feuille en haut à droite.
+4. La configuration de la feuille s'affiche. Dans la liste déroulante "Cette Fiche", choisissez "Fiche de Consentement", sauvegardez.
 5. La fiche de consentement apparaît alors.
-5. Utilisez ensuite la Ownership Configuration pour attribuer la fiche de consentement au joueur correspondant.
+5. Utilisez ensuite l'option "Configurer les droits" pour attribuer la fiche de consentement au joueur correspondant.
 6. Le joueur pourra alors remplir la fiche, indiquant ses préférences et ses limites.
 
 ### En cours de partie
@@ -157,10 +157,10 @@ A consent form is a tool used to ensure a respectful and safe gaming experience 
 
 ### Use
 
-1. Once the module is activated, go to the Actors tab of your world.
+1. Once the module is activated, go to the "Actors" tab of your world.
 2. Create a new actor or duplicate an existing actor.
 3. Open its sheet, then click on ⚙️ Sheet in the top right.
-4. The sheet configuration appears. In the "This Sheet" dropdown list, choose Consent Form.
+4. The sheet configuration appears. In the "This Sheet" dropdown list, choose "Consent Form".
 5. The consent form then appears.
 5. Then use the Ownership Configuration to assign the consent form to the corresponding player.
 6. The player can then fill out the form, indicating their preferences and limits.
