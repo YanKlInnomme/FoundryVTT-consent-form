@@ -14,7 +14,7 @@ Le Module consent-form permet d'intégrer des fiches de consentement simples et 
 Si vous appréciez le module et que vous avez les moyens de le faire, vous pouvez me soutenir en m'offrant un café sur Buy Me a Coffee (https://www.buymeacoffee.com/yank). Votre geste serait grandement apprécié et contribuerait à soutenir le développement continu. Quoi qu'il en soit, je vous souhaite une expérience enrichissante et divertissante. N'hésitez pas à me contacter pour partager vos commentaires ou signaler tout problème éventuel.
 
 ## Version 1.0.0
- - Création du module (sur une idée initialement intégrée dans le module `apocalypse-world`)
+ - Création du module
 
 ## Qu'est-ce qu'une fiche de consentement ?
 
@@ -76,7 +76,7 @@ Une fiche de consentement est un outil utilisé pour assurer une expérience de 
 1. Une fois le module activé, allez dans l'onglet Acteurs de votre monde.
 2. Créez un nouvel acteur ou dupliquez un acteur existant.
 3. Ouvrez sa fiche, puis cliquez sur ⚙️ Sheet en haut à droite.
-4. La configuration de la feuille s'affiche. Dans la liste déroulante, choisissez Consent Form.
+4. La configuration de la feuille s'affiche. Dans la liste déroulante "This Sheet", choisissez Consent Form.
 5. La fiche de consentement apparaît alors.
 5. Utilisez ensuite la Ownership Configuration pour attribuer la fiche de consentement au joueur correspondant.
 6. Le joueur pourra alors remplir la fiche, indiquant ses préférences et ses limites.
@@ -88,3 +88,87 @@ Si un sujet sensible est abordé durant la partie, les joueurs peuvent utiliser 
 ### Support
 
 Pour toute question ou problème, veuillez consulter la documentation du module ou ouvrir une issue sur le dépôt GitHub.
+
+---------------------------------------------------------------------
+
+# Module consent-form for Foundry VTT
+
+The consent-form Module allows you to integrate simple and intuitive consent forms for each player in any Foundry VTT system. This convenient solution helps create a respectful and safe gaming environment for all participants.
+
+If you like the module and have the means to do so, you can support me by offering me a coffee on Buy Me a Coffee (https://www.buymeacoffee.com/yank). Your support would be greatly appreciated and will aid ongoing development. This will enable me to prepare additional ready-to-play scenarios for you. In any case, I hope you have a rewarding and enjoyable experience. Please feel free to contact me with any comments or issues.
+
+## Version 1.0.0
+ - Module creation
+
+## What is a consent form?
+
+A consent form is a tool used to ensure a respectful and safe gaming experience for all participants. It allows players and the GM to define together which themes are acceptable, which require prior discussion, and which are strictly forbidden.
+
+### Main objectives
+
+- **Prevent discomfort or trauma**: Some themes may recall painful personal experiences or trigger negative emotions.
+- **Foster open communication**: The form encourages a prior discussion to define everyone's expectations.
+- **Create an inclusive and respectful gaming framework**: All participants have a say in what will be addressed or not.
+
+### Typical content of a consent form
+
+- *Sensitive or taboo themes*: For example, violence, abuse, discrimination, mental health, sexuality.
+
+- **Tolerance levels**: Each theme can be classified according to a three-level system:
+    - 🟢 **Free narration**: The theme can be addressed without restriction.
+    - 🟡 **Subject to discussion**: The theme can be addressed, but only after a discussion to clarify the limits.
+    - 🔴 **Forbidden theme**: The theme is totally excluded from the game.
+
+### Examples of common themes
+
+- Extreme violence (torture, mutil)
+- Explicit sexual relationships
+- Mental or physical illness
+- Discrimination (racism, sexism, homophobia)
+- Specific fears (phobias like spiders or confined spaces)
+
+### Practical use
+
+- **Before the game**: Each player fills out the form, indicating their preferences and limits.
+- **As a group**: The GM compiles this information to create a gaming experience that respects everyone's limits.
+- **During the game**: If a sensitive theme arises, the form serves as a reference for how to handle it.
+
+### Advantages
+
+- Builds trust between players.
+- Avoids uncomfortable or potentially traumatic situations.
+- Encourages more immersive and enjoyable games for everyone.
+
+**This is a particularly useful tool for games with dark or realistic themes, such as Kult: Divinity Lost or horror scenarios, but it can apply to any type of game.**
+
+## How to use the module
+
+### Installation
+
+1. Download the module from the Foundry VTT modules page or from the GitHub repository.
+2. In Foundry VTT, go to the "Modules" tab and click on "Install Module".
+3. Search for "consent-form" and click on "Install".
+
+### Activation
+
+1. Open your world in Foundry VTT.
+2. Go to "Game Settings" > "Manage Modules".
+3. Check the box next to "consent-form" and click "Save Changes".
+
+### Use
+
+1. Once the module is activated, go to the Actors tab of your world.
+2. Create a new actor or duplicate an existing actor.
+3. Open its sheet, then click on ⚙️ Sheet in the top right.
+4. The sheet configuration appears. In the "This Sheet" dropdown list, choose Consent Form.
+5. The consent form then appears.
+5. Then use the Ownership Configuration to assign the consent form to the corresponding player.
+6. The player can then fill out the form, indicating their preferences and limits.
+
+### During the game
+
+If a sensitive subject is addressed during the game, players can use the form's alert buttons to send a private message to the GM, reminding them of specific sensitive points.
+
+### Support
+
+For any questions or issues, please refer to the module documentation or open an issue on the GitHub repository.
