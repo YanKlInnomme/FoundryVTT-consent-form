@@ -132,3 +132,34 @@
 .consent-sheet .alert-button i {
   font-size: 1.1em;
 }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: max-content; /* Ajuste automatiquement la largeur en fonction du texte */
+  max-width: 220px; /* Limite la largeur pour éviter les bulles trop grandes */
+  background-color: rgba(50, 50, 50, 0.9); /* Fond légèrement transparent */
+  color: #fff;
+  text-align: left;
+  border-radius: 4px; /* Coins légèrement arrondis */
+  padding: 6px 10px; /* Padding réduit pour un meilleur ajustement */
+  position: absolute;
+  z-index: 1;
+  bottom: 110%; /* Position au-dessus de l'élément */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out; /* Animation plus fluide */
+  white-space: normal; /* Permet au texte de revenir à la ligne */
+  overflow-wrap: break-word; /* Coupe le texte si nécessaire */
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

@@ -13,6 +13,11 @@ Ce module permet d'intégrer des fiches de consentement simples et intuitives po
 
 Si vous appréciez le module et que vous avez les moyens de le faire, vous pouvez me soutenir en m'offrant un café sur Buy Me a Coffee (https://www.buymeacoffee.com/yank). Votre geste serait grandement apprécié et contribuerait à soutenir le développement continu. Quoi qu'il en soit, je vous souhaite une expérience enrichissante et divertissante. N'hésitez pas à me contacter pour partager vos commentaires ou signaler tout problème éventuel.
 
+## Version 2.0.0
+ - Ajout d'entrées libres dans l'ensemble des catégories
+ - Ajout de nouvelles entrées dans l'ensemble des catégories afin de couvrir un plus large spectre de thèmes
+ - Ajout d'infobulles pour expliquer chaque thème évoqué
+
 ## Version 1.0.0
  - Création du module
 
@@ -96,6 +101,11 @@ Pour toute question ou problème, veuillez consulter la documentation du module 
 This module allows you to integrate simple and intuitive consent forms for each player in any Foundry VTT system. This convenient solution helps create a respectful and safe gaming environment for all participants.
 
 If you like the module and have the means to do so, you can support me by offering me a coffee on Buy Me a Coffee (https://www.buymeacoffee.com/yank). Your support would be greatly appreciated and will aid ongoing development. This will enable me to prepare additional ready-to-play scenarios for you. In any case, I hope you have a rewarding and enjoyable experience. Please feel free to contact me with any comments or issues.
+
+## Version 2.0.0
+ - Added free entries in all categories
+ - Added new entries in all categories to cover a wider range of themes
+ - Added tooltips to explain each theme mentioned
 
 ## Version 1.0.0
  - Module creation

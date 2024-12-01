@@ -61,7 +61,10 @@
             </div>
           {{else}}
             <div class="form-row">
-              <label>{{localize (concat "CONSENT.FEARS_" (uppercase key))}}</label>
+              <label class="tooltip">
+                {{localize (concat "CONSENT.FEARS_" (uppercase key))}}
+                <span class="tooltiptext">{{localize (concat 'CONSENT.DEFINITION_' (uppercase key))}}</span>
+              </label>
               <select name="fears.{{key}}">
                 {{{selectOptions ../consentLevels selected=level}}}
               </select>
@@ -77,15 +80,50 @@
     <div class="tab" data-tab="realWorld">
       <div class="form-group">
         {{#each consent.realWorld as |level key|}}
-          <div class="form-row">
-            <label>{{localize (concat "CONSENT.REALWORLD_" (uppercase key))}}</label>
-            <select name="realWorld.{{key}}">
-              {{{selectOptions ../consentLevels selected=level}}}
-            </select>
-            <button type="button" class="alert-button" data-category="realWorld" data-key="{{key}}">
-              <i class="fas fa-exclamation-triangle"></i>
-            </button>
-          </div>
+          {{#if (eq key "other1")}}
+            <div class="form-row">
+              <input type="text" name="realWorld.other1.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_REALWORLD'}}">
+              <select name="realWorld.other1.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="realWorld" data-key="other1">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "other2")}}
+            <div class="form-row">
+              <input type="text" name="realWorld.other2.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_REALWORLD'}}">
+              <select name="realWorld.other2.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="realWorld" data-key="other2">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "other3")}}
+            <div class="form-row">
+              <input type="text" name="realWorld.other3.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_REALWORLD'}}">
+              <select name="realWorld.other3.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="realWorld" data-key="other3">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else}}
+            <div class="form-row">
+              <label class="tooltip">
+                {{localize (concat "CONSENT.REALWORLD_" (uppercase key))}}
+                <span class="tooltiptext">{{localize (concat 'CONSENT.DEFINITION_' (uppercase key))}}</span>
+              </label>
+              <select name="realWorld.{{key}}">
+                {{{selectOptions ../consentLevels selected=level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="realWorld" data-key="{{key}}">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{/if}}
         {{/each}}
       </div>
     </div>
@@ -93,15 +131,50 @@
     <div class="tab" data-tab="punishment">
       <div class="form-group">
         {{#each consent.punishment as |level key|}}
-          <div class="form-row">
-            <label>{{localize (concat "CONSENT.PUNISHMENT_" (uppercase key))}}</label>
-            <select name="punishment.{{key}}">
-              {{{selectOptions ../consentLevels selected=level}}}
-            </select>
-            <button type="button" class="alert-button" data-category="punishment" data-key="{{key}}">
-              <i class="fas fa-exclamation-triangle"></i>
-            </button>
-          </div>
+          {{#if (eq key "other1")}}
+            <div class="form-row">
+              <input type="text" name="punishment.other1.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_PUNISHMENT'}}">
+              <select name="punishment.other1.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="punishment" data-key="other1">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "other2")}}
+            <div class="form-row">
+              <input type="text" name="punishment.other2.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_PUNISHMENT'}}">
+              <select name="punishment.other2.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="punishment" data-key="other2">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "other3")}}
+            <div class="form-row">
+              <input type="text" name="punishment.other3.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_PUNISHMENT'}}">
+              <select name="punishment.other3.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="punishment" data-key="other3">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else}}
+            <div class="form-row">
+              <label class="tooltip">
+                {{localize (concat "CONSENT.PUNISHMENT_" (uppercase key))}}
+                <span class="tooltiptext">{{localize (concat 'CONSENT.DEFINITION_' (uppercase key))}}</span>
+              </label>
+              <select name="punishment.{{key}}">
+                {{{selectOptions ../consentLevels selected=level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="punishment" data-key="{{key}}">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{/if}}
         {{/each}}
       </div>
     </div>
@@ -109,19 +182,62 @@
     <div class="tab" data-tab="romance">
       <div class="form-group">
         {{#each consent.romance as |level key|}}
-          {{#if (or (eq key "taboo1") (eq key "taboo2"))}}
+          {{#if (eq key "other1")}}
             <div class="form-row">
-              <input type="text" name="romance.{{key}}.value" value="{{level.value}}" placeholder="{{localize (concat 'CONSENT.ROMANCE_' (uppercase key))}}">
-              <select name="romance.{{key}}.level">
+              <input type="text" name="romance.other1.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_ROMANCE'}}">
+              <select name="romance.other1.level">
                 {{{selectOptions ../consentLevels selected=level.level}}}
               </select>
-              <button type="button" class="alert-button" data-category="romance" data-key="{{key}}">
+              <button type="button" class="alert-button" data-category="romance" data-key="other1">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "other2")}}
+            <div class="form-row">
+              <input type="text" name="romance.other2.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_ROMANCE'}}">
+              <select name="romance.other2.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="romance" data-key="other2">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "other3")}}
+            <div class="form-row">
+              <input type="text" name="romance.other3.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_ROMANCE'}}">
+              <select name="romance.other3.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="romance" data-key="other3">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "taboo1")}}
+            <div class="form-row">
+              <input type="text" name="romance.taboo1.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.ROMANCE_TABOO_PLACEHOLDER'}}">
+              <select name="romance.taboo1.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="romance" data-key="taboo1">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "taboo2")}}
+            <div class="form-row">
+              <input type="text" name="romance.taboo2.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.ROMANCE_TABOO_PLACEHOLDER'}}">
+              <select name="romance.taboo2.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="romance" data-key="taboo2">
                 <i class="fas fa-exclamation-triangle"></i>
               </button>
             </div>
           {{else}}
             <div class="form-row">
-              <label>{{localize (concat "CONSENT.ROMANCE_" (uppercase key))}}</label>
+              <label class="tooltip">
+                {{localize (concat "CONSENT.ROMANCE_" (uppercase key))}}
+                <span class="tooltiptext">{{localize (concat 'CONSENT.DEFINITION_' (uppercase key))}}</span>
+              </label>
               <select name="romance.{{key}}">
                 {{{selectOptions ../consentLevels selected=level}}}
               </select>
@@ -137,19 +253,72 @@
     <div class="tab" data-tab="sex">
       <div class="form-group">
         {{#each consent.sex as |level key|}}
-          {{#if (or (eq key "bdsm1") (eq key "bdsm2") (eq key "bdsm3"))}}
+          {{#if (eq key "other1")}}
             <div class="form-row">
-              <input type="text" name="sex.{{key}}.value" value="{{level.value}}" placeholder="{{localize (concat 'CONSENT.SEX_' (uppercase key))}}">
-              <select name="sex.{{key}}.level">
+              <input type="text" name="sex.other1.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_SEX'}}">
+              <select name="sex.other1.level">
                 {{{selectOptions ../consentLevels selected=level.level}}}
               </select>
-              <button type="button" class="alert-button" data-category="sex" data-key="{{key}}">
+              <button type="button" class="alert-button" data-category="sex" data-key="other1">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "other2")}}
+            <div class="form-row">
+              <input type="text" name="sex.other2.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_SEX'}}">
+              <select name="sex.other2.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="sex" data-key="other2">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "other3")}}
+            <div class="form-row">
+              <input type="text" name="sex.other3.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_SEX'}}">
+              <select name="sex.other3.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="sex" data-key="other3">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "bdsm1")}}
+            <div class="form-row">
+              <input type="text" name="sex.bdsm1.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.SEX_BDSM_PLACEHOLDER'}}">
+              <select name="sex.bdsm1.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="sex" data-key="bdsm1">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "bdsm2")}}
+            <div class="form-row">
+              <input type="text" name="sex.bdsm2.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.SEX_BDSM_PLACEHOLDER'}}">
+              <select name="sex.bdsm2.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="sex" data-key="bdsm2">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "bdsm3")}}
+            <div class="form-row">
+              <input type="text" name="sex.bdsm3.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.SEX_BDSM_PLACEHOLDER'}}">
+              <select name="sex.bdsm3.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="sex" data-key="bdsm3">
                 <i class="fas fa-exclamation-triangle"></i>
               </button>
             </div>
           {{else}}
             <div class="form-row">
-              <label>{{localize (concat "CONSENT.SEX_" (uppercase key))}}</label>
+              <label class="tooltip">
+                {{localize (concat "CONSENT.SEX_" (uppercase key))}}
+                <span class="tooltiptext">{{localize (concat 'CONSENT.DEFINITION_' (uppercase key))}}</span>
+              </label>
               <select name="sex.{{key}}">
                 {{{selectOptions ../consentLevels selected=level}}}
               </select>
@@ -165,15 +334,50 @@
     <div class="tab" data-tab="violence">
       <div class="form-group">
         {{#each consent.violence as |level key|}}
-          <div class="form-row">
-            <label>{{localize (concat "CONSENT.VIOLENCE_" (uppercase key))}}</label>
-            <select name="violence.{{key}}">
-              {{{selectOptions ../consentLevels selected=level}}}
-            </select>
-            <button type="button" class="alert-button" data-category="violence" data-key="{{key}}">
-              <i class="fas fa-exclamation-triangle"></i>
-            </button>
-          </div>
+          {{#if (eq key "other1")}}
+            <div class="form-row">
+              <input type="text" name="violence.other1.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_VIOLENCE'}}">
+              <select name="violence.other1.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="violence" data-key="other1">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "other2")}}
+            <div class="form-row">
+              <input type="text" name="violence.other2.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_VIOLENCE'}}">
+              <select name="violence.other2.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="violence" data-key="other2">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "other3")}}
+            <div class="form-row">
+              <input type="text" name="violence.other3.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_VIOLENCE'}}">
+              <select name="violence.other3.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="violence" data-key="other3">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else}}
+            <div class="form-row">
+              <label class="tooltip">
+                {{localize (concat "CONSENT.VIOLENCE_" (uppercase key))}}
+                <span class="tooltiptext">{{localize (concat 'CONSENT.DEFINITION_' (uppercase key))}}</span>
+              </label>
+              <select name="violence.{{key}}">
+                {{{selectOptions ../consentLevels selected=level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="violence" data-key="{{key}}">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{/if}}
         {{/each}}
       </div>
     </div>
@@ -181,15 +385,50 @@
     <div class="tab" data-tab="discrimination">
       <div class="form-group">
         {{#each consent.discrimination as |level key|}}
-          <div class="form-row">
-            <label>{{localize (concat "CONSENT.DISCRIMINATION_" (uppercase key))}}</label>
-            <select name="discrimination.{{key}}">
-              {{{selectOptions ../consentLevels selected=level}}}
-            </select>
-            <button type="button" class="alert-button" data-category="discrimination" data-key="{{key}}">
-              <i class="fas fa-exclamation-triangle"></i>
-            </button>
-          </div>
+          {{#if (eq key "other1")}}
+            <div class="form-row">
+              <input type="text" name="discrimination.other1.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_DISCRIMINATION'}}">
+              <select name="discrimination.other1.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="discrimination" data-key="other1">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "other2")}}
+            <div class="form-row">
+              <input type="text" name="discrimination.other2.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_DISCRIMINATION'}}">
+              <select name="discrimination.other2.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="discrimination" data-key="other2">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "other3")}}
+            <div class="form-row">
+              <input type="text" name="discrimination.other3.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_DISCRIMINATION'}}">
+              <select name="discrimination.other3.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="discrimination" data-key="other3">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else}}
+            <div class="form-row">
+              <label class="tooltip">
+                {{localize (concat "CONSENT.DISCRIMINATION_" (uppercase key))}}
+                <span class="tooltiptext">{{localize (concat 'CONSENT.DEFINITION_' (uppercase key))}}</span>
+              </label>
+              <select name="discrimination.{{key}}">
+                {{{selectOptions ../consentLevels selected=level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="discrimination" data-key="{{key}}">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{/if}}
         {{/each}}
       </div>
     </div>
@@ -197,39 +436,102 @@
     <div class="tab" data-tab="health">
       <div class="form-group">
         {{#each consent.health as |level key|}}
-          {{#if (or (eq key "addiction1") (eq key "addiction2"))}}
+          {{#if (eq key "other1")}}
             <div class="form-row">
-              <input type="text" name="health.{{key}}.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.HEALTH_ADDICTION_PLACEHOLDER'}}">
-              <select name="health.{{key}}.level">
+              <input type="text" name="health.other1.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_HEALTH'}}">
+              <select name="health.other1.level">
                 {{{selectOptions ../consentLevels selected=level.level}}}
               </select>
-              <button type="button" class="alert-button" data-category="health" data-key="{{key}}">
+              <button type="button" class="alert-button" data-category="health" data-key="other1">
                 <i class="fas fa-exclamation-triangle"></i>
               </button>
             </div>
-          {{else if (or (eq key "illness1") (eq key "illness2"))}}
+          {{else if (eq key "other2")}}
             <div class="form-row">
-              <input type="text" name="health.{{key}}.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.HEALTH_ILLNESS_PLACEHOLDER'}}">
-              <select name="health.{{key}}.level">
+              <input type="text" name="health.other2.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_HEALTH'}}">
+              <select name="health.other2.level">
                 {{{selectOptions ../consentLevels selected=level.level}}}
               </select>
-              <button type="button" class="alert-button" data-category="health" data-key="{{key}}">
+              <button type="button" class="alert-button" data-category="health" data-key="other2">
                 <i class="fas fa-exclamation-triangle"></i>
               </button>
             </div>
-          {{else if (or (eq key "mentalIllness1") (eq key "mentalIllness2"))}}
+          {{else if (eq key "other3")}}
             <div class="form-row">
-              <input type="text" name="health.{{key}}.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.HEALTH_MENTAL_ILLNESS_PLACEHOLDER'}}">
-              <select name="health.{{key}}.level">
+              <input type="text" name="health.other3.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_HEALTH'}}">
+              <select name="health.other3.level">
                 {{{selectOptions ../consentLevels selected=level.level}}}
               </select>
-              <button type="button" class="alert-button" data-category="health" data-key="{{key}}">
+              <button type="button" class="alert-button" data-category="health" data-key="other3">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+            {{else if (eq key "addiction1")}}
+            <div class="form-row">
+              <input type="text" name="health.addiction1.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.HEALTH_ADDICTION_PLACEHOLDER'}}">
+              <select name="health.addiction1.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="health" data-key="addiction1">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "addiction2")}}
+            <div class="form-row">
+              <input type="text" name="health.addiction2.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.HEALTH_ADDICTION_PLACEHOLDER'}}">
+              <select name="health.addiction2.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="health" data-key="addiction2">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "illness1")}}
+            <div class="form-row">
+              <input type="text" name="health.illness1.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.HEALTH_ILLNESS_PLACEHOLDER'}}">
+              <select name="health.illness1.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="health" data-key="illness1">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "illness2")}}
+            <div class="form-row">
+              <input type="text" name="health.illness2.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.HEALTH_ILLNESS_PLACEHOLDER'}}">
+              <select name="health.illness2.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="health" data-key="illness2">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "mentalIllness1")}} 
+            <div class="form-row">
+              <input type="text" name="health.mentalIllness1.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.HEALTH_MENTAL_ILLNESS_PLACEHOLDER'}}">
+              <select name="health.mentalIllness1.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="health" data-key="mentalIllness1">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "mentalIllness2")}}
+            <div class="form-row">
+              <input type="text" name="health.mentalIllness2.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.HEALTH_MENTAL_ILLNESS_PLACEHOLDER'}}">
+              <select name="health.mentalIllness2.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="health" data-key="mentalIllness2">
                 <i class="fas fa-exclamation-triangle"></i>
               </button>
             </div>
           {{else}}
             <div class="form-row">
-              <label>{{localize (concat "CONSENT.HEALTH_" (uppercase key))}}</label>
+              <label class="tooltip">
+                {{localize (concat "CONSENT.HEALTH_" (uppercase key))}}
+                <span class="tooltiptext">{{localize (concat 'CONSENT.DEFINITION_' (uppercase key))}}</span>
+              </label>
               <select name="health.{{key}}">
                 {{{selectOptions ../consentLevels selected=level}}}
               </select>
@@ -245,21 +547,56 @@
     <div class="tab" data-tab="extremism">
       <div class="form-group">
         {{#each consent.extremism as |level key|}}
-          <div class="form-row">
-            <label>{{localize (concat "CONSENT.EXTREMISM_" (uppercase key))}}</label>
-            <select name="extremism.{{key}}">
-              {{{selectOptions ../consentLevels selected=level}}}
-            </select>
-            <button type="button" class="alert-button" data-category="extremism" data-key="{{key}}">
-              <i class="fas fa-exclamation-triangle"></i>
-            </button>
-          </div>
+          {{#if (eq key "other1")}}
+            <div class="form-row">
+              <input type="text" name="extremism.other1.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_EXTREMISM'}}">
+              <select name="extremism.other1.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="extremism" data-key="other1">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "other2")}}
+            <div class="form-row">
+              <input type="text" name="extremism.other2.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_EXTREMISM'}}">
+              <select name="extremism.other2.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="extremism" data-key="other2">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else if (eq key "other3")}}
+            <div class="form-row">
+              <input type="text" name="extremism.other3.value" value="{{level.value}}" placeholder="{{localize 'CONSENT.OTHER_EXTREMISM'}}">
+              <select name="extremism.other3.level">
+                {{{selectOptions ../consentLevels selected=level.level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="extremism" data-key="other3">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{else}}
+            <div class="form-row">
+              <label class="tooltip">
+                {{localize (concat "CONSENT.EXTREMISM_" (uppercase key))}}
+                <span class="tooltiptext">{{localize (concat 'CONSENT.DEFINITION_' (uppercase key))}}</span>
+              </label>
+              <select name="extremism.{{key}}">
+                {{{selectOptions ../consentLevels selected=level}}}
+              </select>
+              <button type="button" class="alert-button" data-category="extremism" data-key="{{key}}">
+                <i class="fas fa-exclamation-triangle"></i>
+              </button>
+            </div>
+          {{/if}}
         {{/each}}
       </div>
     </div>
 
     <div class="tab" data-tab="notes">
-      <textarea name="notes" rows="40" placeholder="{{localize 'CONSENT.NOTES_PLACEHOLDER'}}">{{consent.notes}}</textarea>
+      <textarea name="notes" rows="30" placeholder="{{localize 'CONSENT.NOTES_PLACEHOLDER'}}">{{consent.notes}}</textarea>
     </div>
   </section>
 </form>
