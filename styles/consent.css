@@ -6,7 +6,6 @@
 
 .consent-sheet .sheet-header {
   flex: 0 0 auto;
-  margin-bottom: 1rem;
   padding: 0.5rem;
 }
 
@@ -18,7 +17,7 @@
 .consent-sheet .consent-levels-explanation {
   flex: 0 0 120px;
   padding: 1rem;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
   background: rgba(0, 0, 0, 0.05);
   border-radius: 4px;
   display: flex;
@@ -47,21 +46,23 @@
 }
 
 .consent-sheet .sheet-tabs {
-  flex: 0 0 auto;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
+  flex-wrap: wrap; /* Permet le retour à la ligne */
+  justify-content: space-between;
   border-top: 2px solid #782e22;
   border-bottom: 2px solid #782e22;
+  padding-top: 0.5rem; /* Espacement entre les lignes */
+  padding-bottom: 0.5rem; /* Espacement entre les lignes */
 }
 
 .consent-sheet .sheet-tabs .item {
-  padding: 0.5rem 1rem;
+  flex: 0 1 18%; /* Définit la largeur de chaque élément, environ 20% en tenant compte des marges */
+  text-align: center; /* Centre le texte */
+  
+  padding: 0.25rem 0.5rem;
   cursor: pointer;
   border-radius: 4px;
-  font-size: 0.9em;
+  font-size: 1em;
 }
 
 .consent-sheet .sheet-tabs .item.active {
