@@ -2,7 +2,7 @@
   "id": "consent-form",
   "title": "Consent Form - Emotional Safety Tool",
   "description": "The module enables consent forms for each player to be integrated into any Foundry VTT game system. This flexible and intuitive solution helps create a respectful and safe playing environment for all participants.",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "license": "LICENSE",
   "compatibility": {
     "minimum": "12",

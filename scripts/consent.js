@@ -17,13 +17,24 @@ Hooks.once('init', () => {
     });
   }
 
-  // Enregistrer la feuille personnalisée pour tous les types d'acteurs sauf npc
+  let actorTypes;
+
+  if (game.system.id === "pf2e") {
+    // Pathfinder 2e stocke les fiches différemment
+    actorTypes = Object.keys(CONFIG.PF2E.Actor.documentClasses).filter(type => type !== "npc");
+  } else {
+    // Pour les autres systèmes
+    actorTypes = Object.keys(CONFIG.Actor.dataModels).filter(type => type !== "npc");
+  }
+
+  // Enregistrement de la feuille pour les types d'acteurs définis
   Actors.registerSheet("consent", ConsentSheet, {
-    types: Object.keys(CONFIG.Actor.dataModels).filter(type => type !== "npc"),
+    types: actorTypes,
     makeDefault: false,
     label: "CONSENT.SHEET_NAME"
   });
-});
+
+}); 
 
 class ConsentSheet extends ActorSheet {
   static get defaultOptions() {
