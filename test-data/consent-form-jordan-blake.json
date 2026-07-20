@@ -1,0 +1,126 @@
+{
+  "format": "consent-form",
+  "formatVersion": 1,
+  "moduleVersion": "3.0.0",
+  "exportedAt": "2026-07-20T12:05:00.000Z",
+  "playerName": "Jordan Blake (test)",
+  "profile": {
+    "version": 3,
+    "updatedAt": "2026-07-20T12:05:00.000Z",
+    "categories": {
+      "fears": {
+        "levels": {
+          "acrophobia": "narrative",
+          "arachnophobia": "narrative",
+          "claustrophobia": "discuss",
+          "lossOfControlPhobia": "forbidden"
+        },
+        "custom": [
+          {
+            "id": "morgan-fear-dental",
+            "label": "Dental procedures described in detail",
+            "level": "forbidden"
+          }
+        ]
+      },
+      "realWorld": {
+        "levels": {
+          "currentWars": "forbidden",
+          "currentGenocides": "forbidden",
+          "historicalWars": "discuss",
+          "naturalDisasters": "narrative",
+          "pandemics": "narrative"
+        },
+        "custom": []
+      },
+      "punishment": {
+        "levels": {
+          "corporalPunishment": "narrative",
+          "physicalTorture": "forbidden",
+          "publicHumiliation": "discuss",
+          "mentalManipulation": "forbidden",
+          "restrictionOfFreedom": "discuss"
+        },
+        "custom": []
+      },
+      "romance": {
+        "levels": {
+          "romanceImplicit": "narrative",
+          "romanceExplicit": "narrative",
+          "romanceBetweenPCs": "narrative",
+          "infidelity": "discuss",
+          "forcedMarriage": "forbidden"
+        },
+        "custom": [
+          {
+            "id": "morgan-romance-player-flirt",
+            "label": "Unplanned flirting directed at my character",
+            "level": "discuss"
+          }
+        ]
+      },
+      "sex": {
+        "levels": {
+          "sexImplicit": "narrative",
+          "sexExplicit": "discuss",
+          "sexualViolence": "forbidden",
+          "sexualManipulation": "forbidden",
+          "paedophilia": "forbidden"
+        },
+        "custom": []
+      },
+      "violence": {
+        "levels": {
+          "domesticViolence": "forbidden",
+          "murdersAndAssassinations": "narrative",
+          "mutilationsAndAmputations": "narrative",
+          "childAbuse": "forbidden",
+          "animalAbuse": "discuss",
+          "realisticCombat": "narrative",
+          "bodyTransformations": "narrative"
+        },
+        "custom": [
+          {
+            "id": "morgan-violence-restraint",
+            "label": "My character being restrained for a prolonged period",
+            "level": "forbidden"
+          }
+        ]
+      },
+      "discrimination": {
+        "levels": {
+          "ableism": "forbidden",
+          "classism": "narrative",
+          "homophobia": "forbidden",
+          "racism": "forbidden",
+          "religiousDiscrimination": "discuss",
+          "sexism": "discuss",
+          "transphobia": "forbidden"
+        },
+        "custom": []
+      },
+      "health": {
+        "levels": {
+          "cancer": "discuss",
+          "depression": "narrative",
+          "suicide": "forbidden",
+          "eatingDisorders": "forbidden",
+          "selfHarm": "discuss",
+          "miscarriage": "forbidden"
+        },
+        "custom": []
+      },
+      "extremism": {
+        "levels": {
+          "totalitarianIdeologies": "discuss",
+          "indoctrination": "forbidden",
+          "religiousFanaticism": "forbidden",
+          "racialSupremacism": "forbidden",
+          "hateGroups": "forbidden"
+        },
+        "custom": []
+      }
+    },
+    "notes": "Entirely fictional profile for module testing. Jordan is comfortable with highly violent fantasy scenes, but does not want the game to directly reproduce current political violence. Ask for explicit agreement before introducing a romantic scene involving their character."
+  }
+}

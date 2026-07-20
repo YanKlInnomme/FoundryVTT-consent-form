@@ -1,0 +1,117 @@
+<div class="consent-app-content">
+<header class="consent-hero consent-hero--gm">
+  <div>
+    <p class="consent-eyebrow">{{localize "CONSENT.SAFETY_OVERVIEW"}}</p>
+    <h1>{{localize "CONSENT.GM_DASHBOARD_HEADING"}}</h1>
+    <p>{{localize "CONSENT.GM_DASHBOARD_INTRO"}}</p>
+  </div>
+</header>
+
+<section class="consent-metrics">
+  <article><strong>{{completed}} / {{playerCount}}</strong><span>{{localize "CONSENT.FORMS_COMPLETED"}}</span></article>
+  <article><strong>{{completionPercent}}%</strong><span>{{localize "CONSENT.COMPLETION"}}</span></article>
+  <article class="metric--amber"><strong>{{totals.discuss}}</strong><span>{{localize "CONSENT.DISCUSSION_POINTS"}}</span></article>
+  <article class="metric--red"><strong>{{totals.forbidden}}</strong><span>{{localize "CONSENT.HARD_LIMITS"}}</span></article>
+</section>
+
+<section class="consent-safety-charts" aria-label="{{localize 'CONSENT.SAFETY_CHARTS_TITLE'}}">
+  <article class="consent-safety-chart consent-safety-chart--forbidden">
+    <header>
+      <div><h2>{{localize "CONSENT.FORBIDDEN_CHART_TITLE"}}</h2><p>{{localize "CONSENT.FORBIDDEN_CHART_HINT"}}</p></div>
+    </header>
+    <div class="consent-chart-bars">
+      {{#each charts.forbidden as |row|}}
+      <button type="button" class="consent-chart-row {{#if row.selected}}selected{{/if}}" data-chart-level="forbidden" data-chart-category="{{row.id}}" aria-pressed="{{#if row.selected}}true{{else}}false{{/if}}">
+        <span class="consent-chart-row__label">{{row.label}}</span>
+        <span class="consent-chart-row__track" aria-hidden="true"><span style="width: {{row.percent}}%"></span></span>
+        <strong>{{row.value}}</strong>
+      </button>
+      {{/each}}
+    </div>
+  </article>
+  <article class="consent-safety-chart consent-safety-chart--discuss">
+    <header>
+      <div><h2>{{localize "CONSENT.DISCUSS_CHART_TITLE"}}</h2><p>{{localize "CONSENT.DISCUSS_CHART_HINT"}}</p></div>
+    </header>
+    <div class="consent-chart-bars">
+      {{#each charts.discuss as |row|}}
+      <button type="button" class="consent-chart-row {{#if row.selected}}selected{{/if}}" data-chart-level="discuss" data-chart-category="{{row.id}}" aria-pressed="{{#if row.selected}}true{{else}}false{{/if}}">
+        <span class="consent-chart-row__label">{{row.label}}</span>
+        <span class="consent-chart-row__track" aria-hidden="true"><span style="width: {{row.percent}}%"></span></span>
+        <strong>{{row.value}}</strong>
+      </button>
+      {{/each}}
+    </div>
+  </article>
+</section>
+
+<div class="consent-dashboard-grid">
+  <aside class="consent-player-list">
+    <h2>{{localize "CONSENT.PLAYERS"}}</h2>
+    {{#each players as |player|}}
+    <button type="button" data-user-id="{{player.id}}" class="player-card {{#if player.selected}}selected{{/if}}">
+      <span class="presence {{#if player.active}}online{{/if}}"></span>
+      <span><strong>{{player.name}}</strong><small>{{#if player.completed}}{{player.updatedAt}}{{else}}{{localize "CONSENT.NOT_COMPLETED"}}{{/if}}</small></span>
+      <i class="fa-solid {{#if player.completed}}fa-circle-check{{else}}fa-clock{{/if}}" aria-hidden="true"></i>
+    </button>
+    {{else}}
+    <p class="empty-state">{{localize "CONSENT.NO_PLAYERS"}}</p>
+    {{/each}}
+  </aside>
+
+  <main class="consent-dashboard-main">
+    <section class="consent-priorities">
+      <header class="consent-priorities__header">
+        <h2>{{localize "CONSENT.TABLE_SUMMARY"}}</h2>
+        {{#if chartFilterActive}}<button type="button" class="consent-chart-clear" data-clear-chart-filter>{{localize "CONSENT.CLEAR_FILTER"}}</button>{{/if}}
+      </header>
+      <p>{{localize "CONSENT.TABLE_SUMMARY_HINT"}}</p>
+      <div class="priority-list">
+        {{#each priorities as |topic|}}
+        <article class="priority-card {{#if topic.forbidden.length}}priority-card--red{{else}}priority-card--amber{{/if}}">
+          <div><small>{{topic.category}}</small><strong>{{topic.label}}</strong></div>
+          <div class="priority-tags">
+            {{#if topic.forbidden.length}}<span class="tag tag--red"><i class="fa-solid fa-ban"></i> {{topic.forbidden.length}} {{localize "CONSENT.FORBIDDEN_SHORT"}}</span>{{/if}}
+            {{#if topic.discuss.length}}<span class="tag tag--amber"><i class="fa-solid fa-comments"></i> {{topic.discuss.length}} {{localize "CONSENT.DISCUSS_SHORT"}}</span>{{/if}}
+          </div>
+        </article>
+        {{else}}
+        <p class="empty-state">{{localize "CONSENT.NO_PRIORITY"}}</p>
+        {{/each}}
+      </div>
+    </section>
+
+    {{#if selected}}
+    <section class="consent-player-detail">
+      <header><div><h2>{{selected.name}}</h2><small>{{localize "CONSENT.LAST_SAVED"}} : {{selected.updatedAt}}</small></div></header>
+      {{#each selected.categories as |category|}}
+      <details class="consent-category" open>
+        <summary>{{category.label}}</summary>
+        <div class="compact-topic-list">
+          {{#each category.items as |item|}}
+            <div class="compact-topic"><span>{{item.label}}</span><span class="tag tag--{{item.level}}">{{item.levelLabel}}</span></div>
+          {{/each}}
+          {{#each category.custom as |item|}}
+            <div class="compact-topic"><span>{{item.label}}</span><span class="tag tag--{{item.level}}">{{item.levelLabel}}</span></div>
+          {{/each}}
+        </div>
+      </details>
+      {{else}}
+      <p class="empty-state">{{localize "CONSENT.NO_PLAYER_BOUNDARIES"}}</p>
+      {{/each}}
+      {{#if selected.notes}}<div class="player-notes"><h3>{{localize "CONSENT.TAB_NOTES"}}</h3><p>{{selected.notes}}</p></div>{{/if}}
+      <section class="consent-gm-note">
+        <header>
+          <div>
+            <h3><i class="fa-solid fa-user-shield" aria-hidden="true"></i> {{localize "CONSENT.GM_NOTE_TITLE"}}</h3>
+            <p>{{localize "CONSENT.GM_NOTE_HINT"}}</p>
+          </div>
+          <small data-gm-note-status></small>
+        </header>
+        <textarea data-gm-note data-user-id="{{selected.id}}" rows="5" placeholder="{{localize 'CONSENT.GM_NOTE_PLACEHOLDER'}}">{{selected.gmNote}}</textarea>
+      </section>
+    </section>
+    {{/if}}
+  </main>
+</div>
+</div>

@@ -1,0 +1,106 @@
+{
+  "format": "consent-form",
+  "formatVersion": 1,
+  "moduleVersion": "3.0.0",
+  "exportedAt": "2026-07-20T12:00:00.000Z",
+  "playerName": "Alex Carter (test)",
+  "profile": {
+    "version": 3,
+    "updatedAt": "2026-07-20T12:00:00.000Z",
+    "categories": {
+      "fears": {
+        "levels": {
+          "arachnophobia": "discuss",
+          "claustrophobia": "forbidden",
+          "nyctophobia": "narrative"
+        },
+        "custom": [
+          {
+            "id": "camille-fear-drowning",
+            "label": "Drowning and being unable to breathe",
+            "level": "discuss"
+          }
+        ]
+      },
+      "realWorld": {
+        "levels": {
+          "currentWars": "discuss",
+          "historicalWars": "narrative",
+          "pandemics": "discuss",
+          "politicalEvents": "narrative"
+        },
+        "custom": []
+      },
+      "punishment": {
+        "levels": {
+          "physicalTorture": "discuss",
+          "publicHumiliation": "forbidden",
+          "incarceration": "narrative"
+        },
+        "custom": []
+      },
+      "romance": {
+        "levels": {
+          "romanceImplicit": "narrative",
+          "romanceExplicit": "discuss",
+          "romanceBetweenPCs": "discuss",
+          "toxicRelationships": "forbidden"
+        },
+        "custom": []
+      },
+      "sex": {
+        "levels": {
+          "sexImplicit": "narrative",
+          "sexExplicit": "forbidden",
+          "sexualViolence": "forbidden",
+          "incest": "forbidden",
+          "paedophilia": "forbidden"
+        },
+        "custom": []
+      },
+      "violence": {
+        "levels": {
+          "murdersAndAssassinations": "narrative",
+          "mutilationsAndAmputations": "discuss",
+          "childAbuse": "forbidden",
+          "animalAbuse": "forbidden",
+          "realisticCombat": "discuss"
+        },
+        "custom": [
+          {
+            "id": "camille-violence-eye-injury",
+            "label": "Detailed eye injuries",
+            "level": "forbidden"
+          }
+        ]
+      },
+      "discrimination": {
+        "levels": {
+          "homophobia": "discuss",
+          "racism": "discuss",
+          "sexism": "narrative",
+          "transphobia": "forbidden"
+        },
+        "custom": []
+      },
+      "health": {
+        "levels": {
+          "cancer": "forbidden",
+          "depression": "discuss",
+          "suicide": "forbidden",
+          "selfHarm": "forbidden"
+        },
+        "custom": []
+      },
+      "extremism": {
+        "levels": {
+          "totalitarianIdeologies": "narrative",
+          "religiousFanaticism": "discuss",
+          "hateGroups": "discuss"
+        },
+        "custom": []
+      }
+    },
+    "notes": "Entirely fictional profile for module testing. Alex enjoys atmospheric horror and suspense, but prefers scenes to fade to black when they become highly realistic. When in doubt, pause briefly and ask whether a veil is sufficient."
+  }
+}

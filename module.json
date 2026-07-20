@@ -1,19 +1,19 @@
 {
   "id": "consent-form",
   "title": "Consent Form - Emotional Safety Tool",
-  "description": "The module enables consent forms for each player to be integrated into any Foundry VTT game system. This flexible and intuitive solution helps create a respectful and safe playing environment for all participants.",
-  "version": "2.1.0",
+  "description": "A system-agnostic emotional safety toolkit for Foundry VTT with individual consent forms, a GM dashboard, table analysis, and a real-time X-Card.",
+  "version": "3.0.0",
   "license": "LICENSE",
   "compatibility": {
-    "minimum": "12",
-    "verified": "12.331",
-    "maximum": "13"
+    "minimum": "14",
+    "verified": "14.365",
+    "maximum": "14"
   },
   "authors": [
     {
       "name": "YanK",
-      "url": "yank-solutions.fr",
-      "email": "yanklinnomme@gmail.com",
+      "url": "https://yanklinnomme.fr",
+      "email": "contact@yanklinnomme.fr",
       "discord": "yanklinnomme"
     }
   ],
@@ -21,8 +21,10 @@
     "scripts/consent.js"
   ],
   "styles": [
-    "styles/consent.css"
+    "styles/consent.css",
+    "styles/x-card-hud.css"
   ],
+  "socket": true,
   "languages": [
     {
       "lang": "fr",

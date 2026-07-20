@@ -1,0 +1,94 @@
+<div class="consent-app-content">
+<header class="consent-hero">
+  <div>
+    <p class="consent-eyebrow">{{localize "CONSENT.SAFETY_TOOL"}}</p>
+    <h1>{{localize "CONSENT.PLAYER_WELCOME"}}</h1>
+    <p>{{localize "CONSENT.PLAYER_INTRO"}}</p>
+  </div>
+  <button type="button" class="consent-x-trigger consent-x-trigger--card" data-action="x-card" title="{{localize 'CONSENT.X_CARD_HUD_HINT'}}" aria-label="{{localize 'CONSENT.X_CARD_BUTTON'}}">
+    <img src="modules/consent-form/assets/x-card.svg" alt="" draggable="false" aria-hidden="true">
+  </button>
+</header>
+
+<section class="consent-transfer">
+  <div class="consent-transfer__copy">
+    <strong>{{localize "CONSENT.TRANSFER_TITLE"}}</strong>
+    <p>{{localize "CONSENT.TRANSFER_HINT"}}</p>
+  </div>
+  <div class="consent-transfer__actions">
+    <button type="button" data-action="export-profile"><i class="fa-solid fa-file-export" aria-hidden="true"></i> {{localize "CONSENT.EXPORT_PROFILE"}}</button>
+    <button type="button" data-action="import-profile"><i class="fa-solid fa-file-import" aria-hidden="true"></i> {{localize "CONSENT.IMPORT_PROFILE"}}</button>
+    <input type="file" accept="application/json,.json" data-import-file hidden>
+  </div>
+</section>
+
+<section class="consent-progress">
+  <div class="consent-progress__copy">
+    <div><strong>{{localize "CONSENT.PROGRESS_TITLE"}}</strong><span data-overall-progress>{{completionPercent}}%</span></div>
+    <p>{{localize "CONSENT.PROGRESS_REASSURANCE"}}</p>
+  </div>
+  <div class="consent-progress__track" aria-hidden="true"><span data-overall-progress-bar style="width: {{completionPercent}}%"></span></div>
+</section>
+
+<aside class="consent-legend" aria-label="{{localize 'CONSENT.LEVELS_TITLE'}}">
+  <span class="level level--green">● {{localize "CONSENT.LEVEL_NARRATIVE_FULL"}}</span>
+  <span class="level level--amber">● {{localize "CONSENT.LEVEL_DISCUSS_FULL"}}</span>
+  <span class="level level--red">● {{localize "CONSENT.LEVEL_FORBIDDEN_FULL"}}</span>
+</aside>
+
+<main class="consent-category-list">
+  <aside class="consent-content-warning"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>{{localize "CONSENT.CONTENT_WARNING"}}</span></aside>
+  {{#each categories as |category|}}
+  <details class="consent-category" {{#if category.open}}open{{/if}}>
+    <summary>
+      <span>{{category.label}}</span>
+      <span class="category-count" data-category-progress="{{category.id}}">{{category.answered}} / {{category.total}}</span>
+    </summary>
+    <div class="consent-category__body">
+      {{#each category.items as |item|}}
+      <div class="consent-topic-row">
+        <div class="consent-topic-copy">
+          <strong>{{item.label}}</strong>
+          {{#if item.definition}}<details class="consent-definition"><summary>{{localize "CONSENT.SHOW_DEFINITION"}}</summary><small>{{item.definition}}</small></details>{{/if}}
+        </div>
+        <div class="consent-level-buttons" role="group" aria-label="{{item.label}}">
+          <button type="button" class="level-dot level-dot--green {{#if (eq item.level 'narrative')}}selected{{/if}}" data-set-level="narrative" data-category="{{category.id}}" data-key="{{item.key}}" aria-pressed="{{#if (eq item.level 'narrative')}}true{{else}}false{{/if}}" title="{{localize 'CONSENT.LEVEL_NARRATIVE'}}"><span aria-hidden="true"></span><span class="consent-sr-only">{{localize "CONSENT.LEVEL_NARRATIVE"}}</span></button>
+          <button type="button" class="level-dot level-dot--amber {{#if (eq item.level 'discuss')}}selected{{/if}}" data-set-level="discuss" data-category="{{category.id}}" data-key="{{item.key}}" aria-pressed="{{#if (eq item.level 'discuss')}}true{{else}}false{{/if}}" title="{{localize 'CONSENT.LEVEL_DISCUSS'}}"><span aria-hidden="true"></span><span class="consent-sr-only">{{localize "CONSENT.LEVEL_DISCUSS"}}</span></button>
+          <button type="button" class="level-dot level-dot--red {{#if (eq item.level 'forbidden')}}selected{{/if}}" data-set-level="forbidden" data-category="{{category.id}}" data-key="{{item.key}}" aria-pressed="{{#if (eq item.level 'forbidden')}}true{{else}}false{{/if}}" title="{{localize 'CONSENT.LEVEL_FORBIDDEN'}}"><span aria-hidden="true"></span><span class="consent-sr-only">{{localize "CONSENT.LEVEL_FORBIDDEN"}}</span></button>
+        </div>
+      </div>
+      {{/each}}
+
+      {{#each category.custom as |row|}}
+      <div class="consent-topic-row consent-topic-row--custom">
+        <input type="text" value="{{row.label}}" placeholder="{{localize 'CONSENT.CUSTOM_TOPIC_PLACEHOLDER'}}" data-custom-label data-category="{{category.id}}" data-custom-id="{{row.id}}">
+        <div class="consent-level-buttons" role="group" aria-label="{{row.label}}">
+          <button type="button" class="level-dot level-dot--green {{#if (eq row.level 'narrative')}}selected{{/if}}" data-set-level="narrative" data-category="{{category.id}}" data-custom-id="{{row.id}}" aria-label="{{localize 'CONSENT.LEVEL_NARRATIVE'}}" aria-pressed="{{#if (eq row.level 'narrative')}}true{{else}}false{{/if}}" title="{{localize 'CONSENT.LEVEL_NARRATIVE'}}"><span aria-hidden="true"></span></button>
+          <button type="button" class="level-dot level-dot--amber {{#if (eq row.level 'discuss')}}selected{{/if}}" data-set-level="discuss" data-category="{{category.id}}" data-custom-id="{{row.id}}" aria-label="{{localize 'CONSENT.LEVEL_DISCUSS'}}" aria-pressed="{{#if (eq row.level 'discuss')}}true{{else}}false{{/if}}" title="{{localize 'CONSENT.LEVEL_DISCUSS'}}"><span aria-hidden="true"></span></button>
+          <button type="button" class="level-dot level-dot--red {{#if (eq row.level 'forbidden')}}selected{{/if}}" data-set-level="forbidden" data-category="{{category.id}}" data-custom-id="{{row.id}}" aria-label="{{localize 'CONSENT.LEVEL_FORBIDDEN'}}" aria-pressed="{{#if (eq row.level 'forbidden')}}true{{else}}false{{/if}}" title="{{localize 'CONSENT.LEVEL_FORBIDDEN'}}"><span aria-hidden="true"></span></button>
+        </div>
+        <button type="button" class="icon-button danger" data-action="remove-custom" data-category="{{category.id}}" data-custom-id="{{row.id}}" aria-label="{{localize 'CONSENT.REMOVE_TOPIC'}}">
+          <i class="fa-solid fa-trash" aria-hidden="true"></i>
+        </button>
+      </div>
+      {{/each}}
+
+      <button type="button" class="add-topic" data-action="add-custom" data-category="{{category.id}}">
+        <i class="fa-solid fa-plus" aria-hidden="true"></i> {{localize "CONSENT.ADD_TOPIC"}}
+      </button>
+    </div>
+  </details>
+  {{/each}}
+
+  <section class="consent-notes">
+    <h2>{{localize "CONSENT.TAB_NOTES"}}</h2>
+    <p>{{localize "CONSENT.NOTES_HELP"}}</p>
+    <textarea name="notes" rows="8" placeholder="{{localize 'CONSENT.NOTES_PLACEHOLDER'}}">{{notes}}</textarea>
+  </section>
+</main>
+
+<footer class="consent-footer">
+  <span><i class="fa-solid fa-lock" aria-hidden="true"></i> {{localize "CONSENT.PRIVACY_NOTICE"}}</span>
+  <span data-save-status role="status" aria-live="polite">{{localize "CONSENT.LAST_SAVED"}} : {{updatedAt}}</span>
+</footer>
+</div>
