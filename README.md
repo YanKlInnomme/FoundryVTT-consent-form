@@ -1,15 +1,20 @@
 ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FYanKlInnomme%2FFoundryVTT-consent-form%2Fmaster%2Fmodule.json&query=%24.compatibility.verified&label=foundry%20vtt&color=%23ee9b3a) ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FYanKlInnomme%2FFoundryVTT-consent-form%2Fmaster%2Fmodule.json&query=%24.version&label=version&color=%230f2f2b) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/YanKlInnomme/FoundryVTT-consent-form/total) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-raw/YanKlInnomme/FoundryVTT-consent-form) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-closed-raw/YanKlInnomme/FoundryVTT-consent-form) ![GitHub forks](https://img.shields.io/github/forks/YanKlInnomme/FoundryVTT-consent-form) ![GitHub Repo stars](https://img.shields.io/github/stars/YanKlInnomme/FoundryVTT-consent-form) <a href="https://www.buymeacoffee.com/yank">![Static Badge](https://img.shields.io/badge/buy_me_a_coffee-FFDD00?logo=Buy%20Me%20A%20Coffee&logoColor=black)</a>
 
+<img width="1919" height="915" alt="Capture d&#39;écran 2026-07-20 103519" src="https://github.com/user-attachments/assets/e2c110c0-23b6-477b-b9ca-4c8d204b3ee9" />
+<img width="1919" height="916" alt="Capture d&#39;écran 2026-07-20 103555" src="https://github.com/user-attachments/assets/9258043f-6267-49b8-ae11-013880ebf9b5" />
+<img width="1919" height="918" alt="Capture d&#39;écran 2026-07-20 103535" src="https://github.com/user-attachments/assets/5d426255-dd85-41db-aa2e-63a442deac22" />
+<img width="1919" height="918" alt="Capture d&#39;écran 2026-07-20 103436" src="https://github.com/user-attachments/assets/9dbf51e2-dd66-4281-a2c0-20c8673f60f7" />
+<img width="1919" height="1006" alt="Capture d&#39;écran 2026-07-20 104848" src="https://github.com/user-attachments/assets/86a9bb1e-c7dd-4048-a57f-bb0581f4c572" />
+<img width="1909" height="946" alt="Capture d&#39;écran 2026-07-20 123757" src="https://github.com/user-attachments/assets/ed779cf0-60ef-4775-b05c-30cfb53d0ba8" />
+<img width="1919" height="1008" alt="Capture d&#39;écran 2026-07-20 121149" src="https://github.com/user-attachments/assets/7402f7d0-d74d-493d-bd4f-dee8c86a72bb" />
+<img width="1919" height="1007" alt="Capture d&#39;écran 2026-07-20 121234" src="https://github.com/user-attachments/assets/b84cba74-11f5-454e-9124-e00dbe3615df" />
+<img width="1919" height="1006" alt="Capture d&#39;écran 2026-07-20 121501" src="https://github.com/user-attachments/assets/051586e4-776f-4847-9ae5-79f5a6f920b9" />
+
 **[See below for the English version](#module-consent-form-for-foundry-vtt)**
 
 # Module consent-form pour Foundry VTT
 
 Ce module permet d'intégrer des fiches de consentement simples et intuitives pour chaque joueur dans n'importe quel système Foundry VTT. Cette solution pratique aide à créer un environnement de jeu respectueux et sécurisé pour tous les participants.
-
-![Capture d'écran 2024-11-27 111258](https://github.com/user-attachments/assets/5ccda1a4-ba3f-45a1-a730-1d805c20b327)
-![Capture d'écran 2024-11-27 111622](https://github.com/user-attachments/assets/129b9d81-c726-4fc4-8cde-a8734fb95643)
-![Capture d'écran 2024-11-27 112115](https://github.com/user-attachments/assets/a7d440c1-5089-4dc4-ae18-bbb78bd46f7c)
-![Capture d'écran 2024-11-27 135218](https://github.com/user-attachments/assets/dad518bc-c3f5-4a05-8ba3-94389eec5219)
 
 Si vous appréciez le module et que vous avez les moyens de le faire, vous pouvez me soutenir en m'offrant un café sur Buy Me a Coffee (https://www.buymeacoffee.com/yank). Votre geste serait grandement apprécié et contribuerait à soutenir le développement continu. Quoi qu'il en soit, je vous souhaite une expérience enrichissante et divertissante. N'hésitez pas à me contacter pour partager vos commentaires ou signaler tout problème éventuel.
 
