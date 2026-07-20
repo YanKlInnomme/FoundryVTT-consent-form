@@ -1,4 +1,3 @@
-<img width="1919" height="1006" alt="Capture d&#39;écran 2026-07-21 013215" src="https://github.com/user-attachments/assets/7f5d1368-1ccd-4f8a-8efa-16702f372eaf" />
 ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FYanKlInnomme%2FFoundryVTT-consent-form%2Fmaster%2Fmodule.json&query=%24.compatibility.verified&label=foundry%20vtt&color=%23ee9b3a) ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FYanKlInnomme%2FFoundryVTT-consent-form%2Fmaster%2Fmodule.json&query=%24.version&label=version&color=%230f2f2b) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/YanKlInnomme/FoundryVTT-consent-form/total) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-raw/YanKlInnomme/FoundryVTT-consent-form) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-closed-raw/YanKlInnomme/FoundryVTT-consent-form) ![GitHub forks](https://img.shields.io/github/forks/YanKlInnomme/FoundryVTT-consent-form) ![GitHub Repo stars](https://img.shields.io/github/stars/YanKlInnomme/FoundryVTT-consent-form) <a href="https://www.buymeacoffee.com/yank">![Static Badge](https://img.shields.io/badge/buy_me_a_coffee-FFDD00?logo=Buy%20Me%20A%20Coffee&logoColor=black)</a>
 
 <img width="1919" height="918" alt="Capture d&#39;écran 2026-07-21 012919" src="https://github.com/user-attachments/assets/9378e102-73ea-44ea-8993-43316b87e9f5" />
@@ -6,9 +5,9 @@
 <img width="1910" height="943" alt="Capture d&#39;écran 2026-07-21 012555" src="https://github.com/user-attachments/assets/1eaddac8-0630-46f6-b637-18ec81288bc0" />
 <img width="1910" height="945" alt="Capture d&#39;écran 2026-07-21 012614" src="https://github.com/user-attachments/assets/490db0cf-9d3d-44f6-9d76-66e31b12e7f7" />
 <img width="1919" height="1006" alt="Capture d&#39;écran 2026-07-21 013057" src="https://github.com/user-attachments/assets/3d3a2ab1-e7de-417d-8a0b-3975f779ed27" />
+<img width="1919" height="1006" alt="Capture d&#39;écran 2026-07-21 013215" src="https://github.com/user-attachments/assets/7f5d1368-1ccd-4f8a-8efa-16702f372eaf" />
 <img width="1919" height="1006" alt="Capture d&#39;écran 2026-07-21 013239" src="https://github.com/user-attachments/assets/81d52f3c-a4bc-4da6-a2e1-3f9719da1459" />
 <img width="1919" height="1006" alt="Capture d&#39;écran 2026-07-21 013328" src="https://github.com/user-attachments/assets/c6327520-49e8-4334-b19f-93daeb994f88" />
-
 
 **[See below for the English version](#module-consent-form-for-foundry-vtt)**
 
