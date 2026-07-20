@@ -18,6 +18,13 @@ Ce module permet d'intégrer des fiches de consentement simples et intuitives po
 
 Si vous appréciez le module et que vous avez les moyens de le faire, vous pouvez me soutenir en m'offrant un café sur Buy Me a Coffee (https://www.buymeacoffee.com/yank). Votre geste serait grandement apprécié et contribuerait à soutenir le développement continu. Quoi qu'il en soit, je vous souhaite une expérience enrichissante et divertissante. N'hésitez pas à me contacter pour partager vos commentaires ou signaler tout problème éventuel.
 
+## Version 3.1.1
+
+- Conservation de la position de défilement lors de l'ajout ou de la suppression d'un sujet personnalisé.
+- Refonte de l'écran X-Carte avec une présentation plus calme, une précision facultative en plusieurs étapes et une pause maintenue pour toute la table.
+- Ajout d'un contrôle MJ permettant de lancer une pause minutée ou sans durée définie.
+- Ajout de thèmes clair et sombre distincts suivant automatiquement le thème choisi dans Foundry VTT.
+
 ## Version 3.0.1
 
 - Correction d'une erreur de compatibilité (erreur dans le maximum du fichier module.json).
@@ -146,6 +153,13 @@ Pour toute question ou problème, veuillez consulter la documentation du module 
 This module allows you to integrate simple and intuitive consent forms for each player in any Foundry VTT system. This convenient solution helps create a respectful and safe gaming environment for all participants.
 
 If you like the module and have the means to do so, you can support me by offering me a coffee on Buy Me a Coffee (https://www.buymeacoffee.com/yank). Your support would be greatly appreciated and will aid ongoing development. In any case, I hope you have a rewarding and enjoyable experience. Please feel free to contact me with any comments or issues.
+
+## Version 3.1.1
+
+- Preserved the scroll position when adding or removing a custom topic.
+- Redesigned the X-Card screen with a calmer presentation, optional progressive detail selection, and a pause maintained for the entire table.
+- Added a GM control for starting a timed or untimed table break.
+- Added distinct light and dark themes that automatically follow the theme selected in Foundry VTT.
 
 ## Version 3.0.1
 - Fixed a compatibility error (error in the maximum of the module.json file).

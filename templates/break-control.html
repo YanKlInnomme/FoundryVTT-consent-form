@@ -1,0 +1,27 @@
+<div class="consent-break-app-content">
+  <header>
+    <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+    <div>
+      <h1>{{localize "CONSENT.BREAK_CONTROL_TITLE"}}</h1>
+      <p>{{localize "CONSENT.BREAK_CONTROL_HINT"}}</p>
+    </div>
+  </header>
+
+  {{#if breakActive}}
+    <section class="consent-break-app__active">
+      <strong>{{localize "CONSENT.BREAK_ACTIVE"}}</strong>
+      <p>{{breakStatus}}</p>
+      <button type="button" data-action="end-break"><i class="fa-solid fa-stop" aria-hidden="true"></i> {{localize "CONSENT.BREAK_END"}}</button>
+    </section>
+  {{else}}
+    <section class="consent-break-app__controls">
+      <label>
+        <span>{{localize "CONSENT.BREAK_MINUTES"}}</span>
+        <input type="number" min="1" max="180" step="1" value="10" data-break-minutes>
+      </label>
+      <button type="button" data-action="start-timed-break"><i class="fa-solid fa-clock" aria-hidden="true"></i> {{localize "CONSENT.BREAK_START_TIMED"}}</button>
+      <span class="consent-break-app__separator">{{localize "CONSENT.BREAK_OR"}}</span>
+      <button type="button" data-action="start-open-break"><i class="fa-solid fa-hourglass" aria-hidden="true"></i> {{localize "CONSENT.BREAK_START_OPEN"}}</button>
+    </section>
+  {{/if}}
+</div>

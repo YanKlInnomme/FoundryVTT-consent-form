@@ -10,7 +10,9 @@ const IMPORT_MAX_TEXT_LENGTH = 100_000;
 
 let lastXCardAt = 0;
 const xCardRequests = new Map();
+const activeXCards = new Map();
 let storageProvisioning = null;
+let tableBreakTimer = null;
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -376,6 +378,7 @@ class ConsentPlayerApp extends HandlebarsApplicationMixin(ApplicationV2) {
   profile = emptyProfile();
   saveQueue = Promise.resolve();
   saveTimer = null;
+  pendingScrollTop = null;
   openCategories = new Set([Object.keys(CATALOG)[0]]);
 
   get title() {
@@ -401,6 +404,11 @@ class ConsentPlayerApp extends HandlebarsApplicationMixin(ApplicationV2) {
 
   _onRender(context, options) {
     super._onRender(context, options);
+    const content = this.element.querySelector(".consent-app-content");
+    if (this.pendingScrollTop !== null) {
+      if (content) content.scrollTop = this.pendingScrollTop;
+      this.pendingScrollTop = null;
+    }
     this.element.querySelectorAll("[data-set-level]").forEach(button => button.addEventListener("click", event => this.#changeLevel(event)));
     this.element.querySelectorAll("input[data-custom-label]").forEach(input => input.addEventListener("input", event => this.#changeCustomLabel(event)));
     this.element.querySelector("textarea[name='notes']")?.addEventListener("input", event => this.#changeNotes(event));
@@ -414,6 +422,7 @@ class ConsentPlayerApp extends HandlebarsApplicationMixin(ApplicationV2) {
 
   async #persist({ render = false } = {}) {
     if (render) {
+      this.pendingScrollTop = this.element?.querySelector(".consent-app-content")?.scrollTop ?? null;
       this.openCategories = new Set([...(this.element?.querySelectorAll(".consent-category[open]") ?? [])]
         .map(details => details.querySelector("[data-category-progress]")?.dataset.categoryProgress)
         .filter(Boolean));
@@ -428,6 +437,7 @@ class ConsentPlayerApp extends HandlebarsApplicationMixin(ApplicationV2) {
       if (render) await this.render();
       else if (status) status.textContent = `${localize("CONSENT.SAVED")} · ${new Date(this.profile.updatedAt).toLocaleTimeString()}`;
     } catch (error) {
+      if (render) this.pendingScrollTop = null;
       console.error("Consent Form | Profile save failed", error);
       if (status) status.textContent = localize("CONSENT.SAVE_ERROR");
       ui.notifications.error(localize("CONSENT.SAVE_ERROR"));
@@ -777,6 +787,117 @@ class ConsentDashboardApp extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 }
 
+class BreakControlApp extends HandlebarsApplicationMixin(ApplicationV2) {
+  static DEFAULT_OPTIONS = {
+    id: "consent-form-break-control",
+    classes: ["consent-form-app", "consent-break-app"],
+    window: { icon: "fa-solid fa-mug-hot", resizable: false },
+    position: { width: 520, height: "auto" }
+  };
+
+  static PARTS = {
+    control: { template: "modules/consent-form/templates/break-control.html" }
+  };
+
+  get title() {
+    return localize("CONSENT.BREAK_CONTROL_TITLE");
+  }
+
+  async _prepareContext(options) {
+    const context = await super._prepareContext(options);
+    const activeBreak = game.settings.get(MODULE_ID, "activeBreak");
+    return foundry.utils.mergeObject(context, {
+      breakActive: Boolean(activeBreak?.id),
+      breakStatus: activeBreak?.endsAt ? localize("CONSENT.BREAK_TIMED_ACTIVE") : localize("CONSENT.BREAK_OPEN_ACTIVE")
+    }, { inplace: false });
+  }
+
+  _onRender(context, options) {
+    super._onRender(context, options);
+    this.element.querySelector("[data-action='start-timed-break']")?.addEventListener("click", async () => {
+      const input = this.element.querySelector("[data-break-minutes]");
+      const minutes = Math.min(180, Math.max(1, Math.round(Number(input?.value) || 10)));
+      await startTableBreak(minutes);
+    });
+    this.element.querySelector("[data-action='start-open-break']")?.addEventListener("click", () => startTableBreak());
+    this.element.querySelector("[data-action='end-break']")?.addEventListener("click", () => endTableBreak());
+  }
+}
+
+async function startTableBreak(minutes = null) {
+  if (!game.user.isGM) return;
+  const startedAt = Date.now();
+  const durationMinutes = Number.isFinite(minutes) ? minutes : null;
+  await game.settings.set(MODULE_ID, "activeBreak", {
+    id: foundry.utils.randomID(),
+    startedAt,
+    endsAt: durationMinutes ? startedAt + durationMinutes * 60_000 : null,
+    durationMinutes
+  });
+}
+
+async function endTableBreak() {
+  if (!game.user.isGM) return;
+  await game.settings.set(MODULE_ID, "activeBreak", {});
+}
+
+function formatBreakTime(milliseconds) {
+  const totalSeconds = Math.max(0, Math.ceil(milliseconds / 1000));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
+function syncTableBreak(activeBreak) {
+  window.clearInterval(tableBreakTimer);
+  tableBreakTimer = null;
+  document.querySelector(".consent-table-break")?.remove();
+  if (!activeBreak?.id) return;
+
+  const overlay = document.createElement("div");
+  overlay.className = "consent-table-break";
+  overlay.dataset.breakId = activeBreak.id;
+  overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-modal", "true");
+  const panel = document.createElement("div");
+  panel.className = "consent-table-break__panel";
+  const icon = document.createElement("i");
+  icon.className = "fa-solid fa-mug-hot consent-table-break__icon";
+  icon.setAttribute("aria-hidden", "true");
+  const title = document.createElement("h2");
+  title.textContent = localize("CONSENT.BREAK_OVERLAY_TITLE");
+  const message = document.createElement("p");
+  message.textContent = activeBreak.endsAt ? localize("CONSENT.BREAK_OVERLAY_TIMED") : localize("CONSENT.BREAK_OVERLAY_OPEN");
+  const time = document.createElement("strong");
+  time.className = "consent-table-break__time";
+  time.setAttribute("aria-live", "polite");
+  panel.append(icon, title, message);
+  if (activeBreak.endsAt) panel.append(time);
+
+  if (game.user.isGM) {
+    const end = document.createElement("button");
+    end.type = "button";
+    end.innerHTML = `<i class="fa-solid fa-stop" aria-hidden="true"></i> ${localize("CONSENT.BREAK_END")}`;
+    end.addEventListener("click", () => endTableBreak());
+    panel.append(end);
+  }
+  overlay.append(panel);
+  document.body.append(overlay);
+
+  const updateTime = () => {
+    if (!activeBreak.endsAt) return;
+    const remaining = activeBreak.endsAt - Date.now();
+    time.textContent = formatBreakTime(remaining);
+    if (remaining > 0) return;
+    window.clearInterval(tableBreakTimer);
+    tableBreakTimer = null;
+    const activeGms = game.users.filter(user => user.isGM && user.active).sort((a, b) => a.id.localeCompare(b.id));
+    if (activeGms[0]?.id === game.user.id) endTableBreak();
+  };
+  updateTime();
+  if (activeBreak.endsAt) tableBreakTimer = window.setInterval(updateTime, 1000);
+}
+
 function getXCardChoices(profile) {
   return prepareCategories(profile).map(category => ({
     id: category.id,
@@ -802,13 +923,14 @@ function createXCardButton({ label, icon, level = null, className = "" }) {
   return button;
 }
 
-function showXCard({ interactive = false, profile = null, onComplete = null, returnFocus = null } = {}) {
+function showXCard({ interactive = false, profile = null, pauseId = null, onComplete = null, onEnd = null, canEnd = false, returnFocus = null } = {}) {
   const existing = document.querySelector(".consent-x-card");
   if (existing?.classList.contains("consent-x-card--interactive") && !interactive) return;
   existing?.remove();
   const previousFocus = returnFocus ?? document.activeElement;
   const overlay = document.createElement("div");
   overlay.className = `consent-x-card${interactive ? " consent-x-card--interactive" : ""}`;
+  if (pauseId) overlay.dataset.pauseId = pauseId;
   overlay.setAttribute("role", interactive ? "dialog" : "status");
   if (interactive) overlay.setAttribute("aria-modal", "true");
   const panel = document.createElement("div");
@@ -818,19 +940,35 @@ function showXCard({ interactive = false, profile = null, onComplete = null, ret
   x.textContent = "X";
   const title = document.createElement("h2");
   title.id = `consent-x-card-title-${foundry.utils.randomID()}`;
-  title.textContent = localize("CONSENT.X_CARD_TITLE");
+  title.textContent = localize(interactive ? "CONSENT.X_CARD_TITLE" : "CONSENT.X_CARD_TABLE_TITLE");
   overlay.setAttribute("aria-labelledby", title.id);
   const message = document.createElement("p");
   message.id = `consent-x-card-description-${foundry.utils.randomID()}`;
-  message.textContent = localize("CONSENT.X_CARD_MESSAGE");
+  message.textContent = localize(interactive ? "CONSENT.X_CARD_MESSAGE" : "CONSENT.X_CARD_TABLE_MESSAGE");
   overlay.setAttribute("aria-describedby", message.id);
   panel.append(x, title, message);
   overlay.append(panel);
 
-  const finish = selection => {
+  const endPause = () => {
     overlay.remove();
     previousFocus?.focus?.();
+    onEnd?.();
+  };
+
+  const showEndAction = () => {
+    const endState = document.createElement("section");
+    endState.className = "consent-x-end-state";
+    message.textContent = localize("CONSENT.X_CARD_DETAIL_RECORDED");
+    const end = createXCardButton({ label: localize("CONSENT.X_CARD_END_PAUSE"), icon: "fa-solid fa-check", className: "consent-x-choice--primary" });
+    end.addEventListener("click", endPause);
+    endState.append(end);
+    panel.querySelector(".consent-x-refinement")?.replaceWith(endState);
+    end.focus();
+  };
+
+  const finishDetail = selection => {
     onComplete?.(selection);
+    showEndAction();
   };
 
   if (interactive) {
@@ -839,7 +977,7 @@ function showXCard({ interactive = false, profile = null, onComplete = null, ret
     refinement.className = "consent-x-refinement";
     const prompt = document.createElement("p");
     prompt.className = "consent-x-refinement__prompt";
-    prompt.textContent = choices.length ? localize("CONSENT.X_CARD_CATEGORY_PROMPT") : localize("CONSENT.X_CARD_NO_FLAGGED_TOPIC");
+    prompt.textContent = localize("CONSENT.X_CARD_CATEGORY_PROMPT");
     const privacy = document.createElement("aside");
     privacy.className = "consent-x-refinement__privacy";
     const privacyIcon = document.createElement("i");
@@ -851,34 +989,59 @@ function showXCard({ interactive = false, profile = null, onComplete = null, ret
     const choiceGrid = document.createElement("div");
     choiceGrid.className = "consent-x-choices";
 
-    for (const category of choices) {
-      const button = createXCardButton({ label: category.label, icon: category.icon });
-      button.addEventListener("click", () => {
-        prompt.textContent = localize("CONSENT.X_CARD_TOPIC_PROMPT");
-        choiceGrid.replaceChildren();
-        for (const item of category.items) {
-          const itemButton = createXCardButton({
-            label: item.label,
-            icon: item.level === "forbidden" ? "fa-solid fa-ban" : "fa-solid fa-comments",
-            level: item.level
-          });
-          itemButton.addEventListener("click", () => finish({ category, item }));
-          choiceGrid.append(itemButton);
-        }
-        const back = createXCardButton({ label: localize("CONSENT.BACK"), icon: "fa-solid fa-arrow-left", className: "consent-x-choice--secondary" });
-        back.addEventListener("click", () => showXCard({ interactive: true, profile, onComplete, returnFocus: previousFocus }));
-        choiceGrid.append(back);
-      });
-      choiceGrid.append(button);
-    }
+    const showCategories = () => {
+      prompt.textContent = localize("CONSENT.X_CARD_CATEGORY_PROMPT");
+      choiceGrid.replaceChildren();
+      for (const category of choices) {
+        const button = createXCardButton({ label: category.label, icon: category.icon });
+        button.addEventListener("click", () => {
+          prompt.textContent = localize("CONSENT.X_CARD_TOPIC_PROMPT");
+          choiceGrid.replaceChildren();
+          for (const item of category.items) {
+            const itemButton = createXCardButton({
+              label: item.label,
+              icon: item.level === "forbidden" ? "fa-solid fa-ban" : "fa-solid fa-comments",
+              level: item.level
+            });
+            itemButton.addEventListener("click", () => finishDetail({ category, item }));
+            choiceGrid.append(itemButton);
+          }
+          const back = createXCardButton({ label: localize("CONSENT.BACK"), icon: "fa-solid fa-arrow-left", className: "consent-x-choice--secondary" });
+          back.addEventListener("click", showCategories);
+          choiceGrid.append(back);
+          choiceGrid.querySelector("button")?.focus();
+        });
+        choiceGrid.append(button);
+      }
 
-    const skip = createXCardButton({ label: localize("CONSENT.X_CARD_SKIP_DETAIL"), icon: "fa-solid fa-shield", className: "consent-x-choice--secondary" });
-    skip.addEventListener("click", () => finish(null));
-    choiceGrid.append(skip);
+      const skip = createXCardButton({ label: localize("CONSENT.X_CARD_SKIP_DETAIL"), icon: "fa-solid fa-shield", className: "consent-x-choice--secondary" });
+      skip.addEventListener("click", () => finishDetail(null));
+      choiceGrid.append(skip);
+      choiceGrid.querySelector("button")?.focus();
+    };
+
     refinement.append(prompt, privacy, choiceGrid);
-    panel.append(refinement);
-  } else {
-    overlay.addEventListener("click", () => overlay.remove());
+    const actions = document.createElement("div");
+    actions.className = "consent-x-actions";
+    const close = createXCardButton({ label: localize("CONSENT.X_CARD_END_PAUSE"), icon: "fa-solid fa-check", className: "consent-x-choice--primary" });
+    close.addEventListener("click", endPause);
+    actions.append(close);
+    if (choices.length) {
+      const specify = createXCardButton({ label: localize("CONSENT.X_CARD_SPECIFY"), icon: "fa-solid fa-chevron-down", className: "consent-x-choice--secondary" });
+      specify.addEventListener("click", () => {
+        actions.replaceWith(refinement);
+        showCategories();
+      });
+      actions.append(specify);
+    }
+    panel.append(actions);
+  } else if (canEnd) {
+    const actions = document.createElement("div");
+    actions.className = "consent-x-actions";
+    const end = createXCardButton({ label: localize("CONSENT.X_CARD_GM_END_PAUSE"), icon: "fa-solid fa-check", className: "consent-x-choice--secondary" });
+    end.addEventListener("click", endPause);
+    actions.append(end);
+    panel.append(actions);
   }
   document.body.append(overlay);
   if (interactive) {
@@ -898,7 +1061,7 @@ function showXCard({ interactive = false, profile = null, onComplete = null, ret
         first.focus();
       }
     });
-  } else window.setTimeout(() => overlay.remove(), 12000);
+  }
 }
 
 async function sendXCardWhisper(selection) {
@@ -933,6 +1096,26 @@ async function sendXCardWhisper(selection) {
   });
 }
 
+async function endXCardPause(pauseId) {
+  if (!pauseId) return;
+  const activeGms = game.users.filter(user => user.isGM && user.active);
+  if (!activeGms.length) return;
+  try {
+    await ChatMessage.create(game.user.isGM ? {
+      content: localize("CONSENT.X_CARD_END_SIGNAL_TECHNICAL"),
+      whisper: game.users.filter(user => user.active).map(user => user.id),
+      flags: { [MODULE_ID]: { xCardEndSignal: true, pauseId } }
+    } : {
+      content: localize("CONSENT.X_CARD_END_REQUEST_TECHNICAL"),
+      whisper: activeGms.map(user => user.id),
+      flags: { [MODULE_ID]: { xCardEndRequest: true, pauseId } }
+    });
+  } catch (error) {
+    console.error("Consent Form | X-Card end request failed", error);
+    ui.notifications.error(localize("CONSENT.X_CARD_SEND_ERROR"));
+  }
+}
+
 async function triggerXCard() {
   const now = Date.now();
   const remaining = X_CARD_COOLDOWN_MS - (now - lastXCardAt);
@@ -941,8 +1124,22 @@ async function triggerXCard() {
     return;
   }
   lastXCardAt = now;
+  const pauseId = foundry.utils.randomID();
+  let detailSent = false;
   const profile = await getOwnProfile();
-  showXCard({ interactive: true, profile, onComplete: selection => sendXCardWhisper(selection) });
+  showXCard({
+    interactive: true,
+    profile,
+    pauseId,
+    onComplete: selection => {
+      detailSent = true;
+      sendXCardWhisper(selection);
+    },
+    onEnd: () => {
+      if (!detailSent) sendXCardWhisper(null);
+      endXCardPause(pauseId);
+    }
+  });
   const gmIds = game.users.filter(user => user.isGM && user.active).map(user => user.id);
   if (!gmIds.length) {
     ui.notifications.warn(localize("CONSENT.X_CARD_NO_GM"));
@@ -952,11 +1149,11 @@ async function triggerXCard() {
     await ChatMessage.create(game.user.isGM ? {
       content: localize("CONSENT.X_CARD_SIGNAL_TECHNICAL"),
       whisper: game.users.filter(user => user.active).map(user => user.id),
-      flags: { [MODULE_ID]: { xCardSignal: true, senderId: game.user.id } }
+      flags: { [MODULE_ID]: { xCardSignal: true, senderId: game.user.id, pauseId } }
     } : {
       content: localize("CONSENT.X_CARD_REQUEST_TECHNICAL"),
       whisper: gmIds,
-      flags: { [MODULE_ID]: { xCardRequest: true } }
+      flags: { [MODULE_ID]: { xCardRequest: true, pauseId } }
     });
   } catch (error) {
     lastXCardAt = 0;
@@ -970,15 +1167,30 @@ async function relayXCardRequest(message) {
   const activeGms = game.users.filter(user => user.isGM && user.active).sort((a, b) => a.id.localeCompare(b.id));
   if (activeGms[0]?.id !== game.user.id) return;
   const senderId = message.author?.id;
-  if (!senderId) return;
+  const pauseId = message.getFlag(MODULE_ID, "pauseId");
+  if (!senderId || typeof pauseId !== "string" || !pauseId) return;
   const now = Date.now();
   const lastRequest = xCardRequests.get(senderId) ?? 0;
   if (now - lastRequest < X_CARD_COOLDOWN_MS) return;
   xCardRequests.set(senderId, now);
+  activeXCards.set(pauseId, senderId);
   await ChatMessage.create({
     content: localize("CONSENT.X_CARD_SIGNAL_TECHNICAL"),
     whisper: game.users.filter(user => user.active).map(user => user.id),
-    flags: { [MODULE_ID]: { xCardSignal: true, senderId } }
+    flags: { [MODULE_ID]: { xCardSignal: true, senderId, pauseId } }
+  });
+}
+
+async function relayXCardEndRequest(message) {
+  if (!game.user.isGM || message.author?.isGM) return;
+  const activeGms = game.users.filter(user => user.isGM && user.active).sort((a, b) => a.id.localeCompare(b.id));
+  if (activeGms[0]?.id !== game.user.id) return;
+  const pauseId = message.getFlag(MODULE_ID, "pauseId");
+  if (typeof pauseId !== "string" || activeXCards.get(pauseId) !== message.author?.id) return;
+  await ChatMessage.create({
+    content: localize("CONSENT.X_CARD_END_SIGNAL_TECHNICAL"),
+    whisper: game.users.filter(user => user.active).map(user => user.id),
+    flags: { [MODULE_ID]: { xCardEndSignal: true, pauseId } }
   });
 }
 
@@ -1070,6 +1282,12 @@ Hooks.once("init", () => {
     type: Object,
     default: {}
   });
+  game.settings.register(MODULE_ID, "activeBreak", {
+    scope: "world",
+    config: false,
+    type: Object,
+    default: {}
+  });
   game.settings.registerMenu(MODULE_ID, "playerApp", {
     name: "CONSENT.PLAYER_APP_TITLE",
     label: "CONSENT.OPEN_PLAYER_APP",
@@ -1086,6 +1304,14 @@ Hooks.once("init", () => {
     type: ConsentDashboardApp,
     restricted: true
   });
+  game.settings.registerMenu(MODULE_ID, "breakControl", {
+    name: "CONSENT.BREAK_CONTROL_TITLE",
+    label: "CONSENT.BREAK_OPEN_CONTROL",
+    hint: "CONSENT.BREAK_CONTROL_HINT",
+    icon: "fa-solid fa-mug-hot",
+    type: BreakControlApp,
+    restricted: true
+  });
 });
 
 Hooks.once("ready", async () => {
@@ -1099,6 +1325,7 @@ Hooks.once("ready", async () => {
   else {
     new XCardHudApp().render(true);
   }
+  syncTableBreak(game.settings.get(MODULE_ID, "activeBreak"));
   game.socket.on(`module.${MODULE_ID}`, data => {
     if (data?.type !== "provision-storage" || !game.user.isGM) return;
     const user = game.users.get(data.userId);
@@ -1107,19 +1334,41 @@ Hooks.once("ready", async () => {
   });
 });
 
+Hooks.on("updateSetting", setting => {
+  if (setting.key !== `${MODULE_ID}.activeBreak`) return;
+  syncTableBreak(game.settings.get(MODULE_ID, "activeBreak"));
+  foundry.applications.instances.get("consent-form-break-control")?.render();
+});
+
 Hooks.on("createChatMessage", message => {
+  if (message.getFlag(MODULE_ID, "xCardEndRequest")) {
+    relayXCardEndRequest(message).catch(error => console.error("Consent Form | X-Card end relay failed", error));
+    return;
+  }
+  if (message.getFlag(MODULE_ID, "xCardEndSignal") && message.author?.isGM) {
+    const pauseId = message.getFlag(MODULE_ID, "pauseId");
+    const overlay = document.querySelector(".consent-x-card");
+    if (overlay?.dataset.pauseId === pauseId) overlay.remove();
+    activeXCards.delete(pauseId);
+    return;
+  }
   if (message.getFlag(MODULE_ID, "xCardRequest")) {
     relayXCardRequest(message).catch(error => console.error("Consent Form | X-Card relay failed", error));
     return;
   }
   if (!message.getFlag(MODULE_ID, "xCardSignal") || !message.author?.isGM) return;
   const senderId = message.getFlag(MODULE_ID, "senderId");
-  if (senderId !== game.user.id) showXCard();
+  const pauseId = message.getFlag(MODULE_ID, "pauseId");
+  if (typeof pauseId !== "string" || !pauseId) return;
+  activeXCards.set(pauseId, senderId);
+  if (senderId !== game.user.id) showXCard({ pauseId, canEnd: game.user.isGM, onEnd: () => endXCardPause(pauseId) });
   if (game.user.isGM) ui.notifications.info(localize("CONSENT.X_CARD_GM_NOTIFICATION"), { permanent: false });
 });
 
 Hooks.on("renderChatMessageHTML", (message, html) => {
-  if (!message.getFlag(MODULE_ID, "xCardRequest") && !message.getFlag(MODULE_ID, "xCardSignal")) return;
+  const technical = ["xCardRequest", "xCardSignal", "xCardEndRequest", "xCardEndSignal"]
+    .some(flag => message.getFlag(MODULE_ID, flag));
+  if (!technical) return;
   const element = html instanceof HTMLElement ? html : html?.[0];
   if (element) element.style.display = "none";
 });

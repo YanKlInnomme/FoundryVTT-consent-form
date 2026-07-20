@@ -29,9 +29,11 @@
 }
 
 .consent-x-hud__button:hover,
-.consent-x-hud__button:active {
+.consent-x-hud__button:active,
+.consent-x-hud__button:focus {
   background: transparent;
   border: 0;
+  outline: 0;
   box-shadow: none;
 }
 

@@ -2,7 +2,7 @@
   "id": "consent-form",
   "title": "Consent Form - Emotional Safety Tool",
   "description": "A system-agnostic emotional safety toolkit for Foundry VTT with individual consent forms, a GM dashboard, table analysis, and a real-time X-Card.",
-  "version": "3.0.1",
+  "version": "3.1.1",
   "license": "LICENSE",
   "compatibility": {
     "minimum": "14",
